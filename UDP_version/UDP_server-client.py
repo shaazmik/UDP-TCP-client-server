@@ -22,11 +22,11 @@ def UDP_client(server_name, server_port):
     return()
 
 
-def UDP_server(server_port):
+def UDP_server(server_name, server_port):
 
     server_socket = socket(AF_INET, SOCK_DGRAM)
 
-    server_socket.bind(('127.0.0.1', server_port))
+    server_socket.bind((server_name, server_port))
 
     print("The server is ready to receive")
 
@@ -88,7 +88,7 @@ if __name__ == '__main__':
     else:
         if (check_arguments(sys.argv) != 0):
             if (sys.argv[3] == '-s'):
-                UDP_server(int(sys.argv[2]))
+                UDP_server(str(sys.argv[1]), int(sys.argv[2]))
 
             elif (sys.argv[3] == '-c'):
                 UDP_client(str(sys.argv[1]), int(sys.argv[2]))
