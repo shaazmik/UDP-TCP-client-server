@@ -15,11 +15,11 @@ def TCP_client(server_name, server_port):
     client_socket.connect((server_name, server_port))
 
     message = input("Input lowercase message: ")
-    client_socket.send(message)
+    client_socket.send(message.encode())
 
     modified_message = client_socket.recv(2048)
 
-    print("From server: ", modified_message)
+    print("From server: ", modified_message.decode())
 
     client_socket.close
 
@@ -30,7 +30,7 @@ def TCP_client(server_name, server_port):
 def TCP_server(server_name, server_port):
 
     server_socket = socket(AF_INET, SOCK_STREAM)
-    server_socket.bind(server_name, server_port)
+    server_socket.bind((server_name, server_port))
     server_socket.listen(1)
 
     print("The server is ready to receive")
@@ -41,7 +41,7 @@ def TCP_server(server_name, server_port):
         message          = connection_socket.recv(2048)
         modified_message = message.upper()
         connection_socket.send(modified_message)
-        
+
         connection_socket.close() 
 
 
@@ -100,9 +100,9 @@ if __name__ == '__main__':
     else:
         if (check_arguments(sys.argv) != 0):
             if (sys.argv[3] == '-s'):
-
+                TCP_server(str(sys.argv[1]), int(sys.argv[2]))
             elif (sys.argv[3] == '-c'):
-                
+                TCP_client(str(sys.argv[1]), int(sys.argv[2]))
             else:
                 logger.error("Wrong type of flag\n")
                 logger.info("\nType of input:\n"
