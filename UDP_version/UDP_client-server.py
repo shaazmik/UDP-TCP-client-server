@@ -7,6 +7,7 @@ import logging
 Max_port_value = 65535
 
 
+
 def UDP_client(server_name, server_port):
 
     client_socket = socket(AF_INET, SOCK_DGRAM)
@@ -19,7 +20,8 @@ def UDP_client(server_name, server_port):
 
     client_socket.close()
 
-    return()
+    return
+
 
 
 def UDP_server(server_name, server_port):
@@ -38,6 +40,7 @@ def UDP_server(server_name, server_port):
 
 
 def check_arguments(argv):
+    
     if argv[2].isdigit():
 
         if (int(argv[2]) < 0 or int(argv[2]) > Max_port_value):
@@ -63,7 +66,9 @@ def check_arguments(argv):
         return 0
 
 
+
 def prepare_logging():
+    
     logger  = logging.getLogger('__name__')
     logger.setLevel(logging.INFO)
 
