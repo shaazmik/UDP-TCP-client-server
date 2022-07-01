@@ -30,7 +30,7 @@ def TCP_client(server_name, server_port):
 def TCP_server(server_name, server_port):
 
     server_socket = socket(AF_INET, SOCK_STREAM)
-    server_socket.bind((server_name, server_port))
+    server_socket.bind(("", server_port))
     server_socket.listen(1)
 
     print("The server is ready to receive")
@@ -96,13 +96,21 @@ if __name__ == '__main__':
 
     if len(sys.argv) < 4:
         logger.error("Wrong number of arguments")
+        logger.info("\nType of input:\n"
+                       "py <namefile>.py <ip> <port> <flag>\n"
+                       "-s flag starts the program as server side\n"
+                       "-c flag starts the program as server side\n")
 
     else:
         if (check_arguments(sys.argv) != 0):
+
+            server_name = str(sys.argv[1])
+            server_port = int(sys.argv[2])
+
             if (sys.argv[3] == '-s'):
-                TCP_server(str(sys.argv[1]), int(sys.argv[2]))
+                TCP_server(server_name, server_port)
             elif (sys.argv[3] == '-c'):
-                TCP_client(str(sys.argv[1]), int(sys.argv[2]))
+                TCP_client(server_name, server_port)
             else:
                 logger.error("Wrong type of flag\n")
                 logger.info("\nType of input:\n"

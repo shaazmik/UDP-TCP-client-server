@@ -28,7 +28,7 @@ def UDP_server(server_name, server_port):
 
     server_socket = socket(AF_INET, SOCK_DGRAM)
 
-    server_socket.bind((server_name, server_port))
+    server_socket.bind(("", server_port))
 
     print("The server is ready to receive")
 
@@ -81,23 +81,29 @@ def prepare_logging():
 
 
 if __name__ == '__main__':
-    #server_name2 = '127.0.0.1' for check yourself
-    #server_port = 1337
+    #server_name2 = '127.0.0.1' (for check yourself)
+    #server_port = 1337 (more than 1024)
 
     logger = prepare_logging()
 
 
     if len(sys.argv) < 4:
         logger.error("Wrong number of arguments")
+        logger.info("\nType of input:\n"
+                       "py <namefile>.py <ip> <port> <flag>\n"
+                       "-s flag starts the program as server side\n"
+                       "-c flag starts the program as server side\n")
 
     else:
         if (check_arguments(sys.argv) != 0):
-            if (sys.argv[3] == '-s'):
-                UDP_server(str(sys.argv[1]), int(sys.argv[2]))
 
+            server_name = str(sys.argv[1])
+            server_port = int(sys.argv[2])
+
+            if (sys.argv[3] == '-s'):
+                UDP_server(server_name, server_port)
             elif (sys.argv[3] == '-c'):
-                UDP_client(str(sys.argv[1]), int(sys.argv[2]))
-                
+                UDP_client(server_name, server_port)
             else:
                 logger.error("Wrong type of flag\n")
                 logger.info("\nType of input:\n"
